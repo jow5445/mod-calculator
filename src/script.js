@@ -49,24 +49,24 @@ function handleParentheses(eval_str) {
 }
 
 function inputValidation(eval_str) {
-    // Replace "π" with "(3.142)"
-    eval_str = eval_str.replace(/π/g, "(3.142)");
-    // Replace "÷" with "/"
-    eval_str = eval_str.replace(/÷/g, "/");
-    // Add "*" before or after prantheses that haven't any operators
-    eval_str = eval_str.replace(/([\d.]+)\(/g, '$1*(');
-    eval_str = eval_str.replace(/\)(?=[\d.])/g, ')*');
-    // Replace "√" with "Math.sqrt(" in "eval_str"
-    eval_str = eval_str.replace(/√/g, "Math.sqrt");
-    // Replace "log" and with "Math.log10("
-    eval_str = eval_str.replace(/log/g, "Math.log10(");
-    // Replace "mod" and with "%"
-    eval_str = eval_str.replace(/mod/g, "%");
-    // Replace factorial (simple integer case)
-    eval_str = eval_str.replace(/(\d+)!/g, 'factorial($1)');
-    // If there was a number before the operator, add "*" before "Math.", handles cases like 2√(16)
-    eval_str = eval_str.replace(/([\d.]+)Math/g, '$1*Math');
-    // Auto close prantheses
+  eval_str = eval_str.replace(/π/g, "(3.142)");
+  
+  eval_str = eval_str.replace(/÷/g, "/");
+  
+  eval_str = eval_str.replace(/([\d.]+)\(/g, '$1*(');
+  
+  eval_str = eval_str.replace(/\)(?=[\d.])/g, ')*');
+  
+  eval_str = eval_str.replace(/√/g, "Math.sqrt");
+  
+  eval_str = eval_str.replace(/log/g, "Math.log10(");
+  
+  eval_str = eval_str.replace(/mod/g, "%");
+  
+  eval_str = eval_str.replace(/(\d+)!/g, 'factorial($1)');
+  
+  eval_str = eval_str.replace(/([\d.]+)Math/g, '$1*Math');
+  
     eval_str = handleParentheses(eval_str);
 
   return eval_str
@@ -76,12 +76,12 @@ function calculate() {
   let eval_str = inputValidation(display.innerText);
   try {
     let result = eval(eval_str);
-    // Check for zero-division error and other infinities
+
     if (!isFinite(result)) {
       throw new Error("Invalid calculation");
     }
-    // Round if it was a long float
-  if (!Number.isInteger(result)) {
+
+    if (!Number.isInteger(result)) {
       result = Number(result.toFixed(5));
   }
   display.innerText = result;
@@ -94,7 +94,7 @@ function calculate() {
   playSFX(calculateSFX);
 }
 
-// Connect specific keyboard buttons to the app
+
 document.addEventListener("keydown", (event) => {
 const key = event.key;
 
@@ -125,7 +125,7 @@ switch (key) {
     break;
 }
 })
-// Import sound effects
+
 const clickSFX = new Audio("../public/sounds/ui/btn-click.wav");
 const calculateSFX = new Audio("../public/sounds/ui/btn-calculate.wav");
 const errorSFX = new Audio("../public/sounds/ui/error.wav");
