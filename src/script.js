@@ -5,7 +5,7 @@ function appendToDisplay(value) {
     display.innerText = value;
 
   } else if (display.innerText === "0" && value === ".") {
-      display.innerText = "0."
+    display.innerText = "0."
 
   } else {
     display.innerText += value;
@@ -26,7 +26,7 @@ function backspace() {
 function factorial(numb) {
   if (isNaN(numb)) throw new Error("Invalid factorial");
   let result = 1;
-  for (let i=2; i <= numb; i++) 
+  for (let i = 2; i <= numb; i++)
     result *= i;
 
   return result;
@@ -50,24 +50,24 @@ function handleParentheses(eval_str) {
 
 function inputValidation(eval_str) {
   eval_str = eval_str.replace(/π/g, "(3.142)");
-  
+
   eval_str = eval_str.replace(/÷/g, "/");
-  
+
   eval_str = eval_str.replace(/([\d.]+)\(/g, '$1*(');
-  
+
   eval_str = eval_str.replace(/\)(?=[\d.])/g, ')*');
-  
+
   eval_str = eval_str.replace(/√/g, "Math.sqrt");
-  
+
   eval_str = eval_str.replace(/log/g, "Math.log10(");
-  
+
   eval_str = eval_str.replace(/mod/g, "%");
-  
+
   eval_str = eval_str.replace(/(\d+)!/g, 'factorial($1)');
-  
+
   eval_str = eval_str.replace(/([\d.]+)Math/g, '$1*Math');
-  
-    eval_str = handleParentheses(eval_str);
+
+  eval_str = handleParentheses(eval_str);
 
   return eval_str
 }
@@ -83,8 +83,8 @@ function calculate() {
 
     if (!Number.isInteger(result)) {
       result = Number(result.toFixed(5));
-  }
-  display.innerText = result;
+    }
+    display.innerText = result;
 
   } catch (error) {
     display.innerText = "Error";
@@ -96,35 +96,89 @@ function calculate() {
 
 
 document.addEventListener("keydown", (event) => {
-const key = event.key;
+  const key = event.key;
 
-if (/[0-9.+\-*()]/.test(key)) {
-appendToDisplay(key);
-return; 
-}
-switch (key) {
-  case "/":
-    event.preventDefault();
-    appendToDisplay("÷");
-    break;
-    
-  case "Enter":
-    event.preventDefault();
-    calculate();
-    break;
+  if (/[0-9.+\-*()]/.test(key)) {
+    appendToDisplay(key);
+    return;
+  }
 
-  case "Escape":
-  case "Delete":
-  case "c":
-    clearDisplay();
-    break;
+  const cols = 5; // عدد الأعمدة
 
-  case "Backspace":
-    event.preventDefault();
-    backspace();
-    break;
-}
+  switch (event.key) {
+
+    case "ArrowRight":
+      event.preventDefault();
+      currentIndex = (currentIndex + 1) % buttons.length;
+      updateSelection();
+      return;
+
+    case "ArrowLeft":
+      event.preventDefault();
+      currentIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+      updateSelection();
+      return;
+
+    case "ArrowDown":
+      event.preventDefault();
+      currentIndex += cols;
+      if (currentIndex >= buttons.length)
+        currentIndex %= buttons.length;
+      updateSelection();
+      return;
+
+    case "ArrowUp":
+      event.preventDefault();
+      currentIndex -= cols;
+      if (currentIndex < 0)
+        currentIndex += buttons.length;
+      updateSelection();
+      return;
+
+    case "Enter":
+    case " ":
+      event.preventDefault();
+      buttons[currentIndex].click();
+      return;
+  }
+
+  switch (key) {
+    case "/":
+      event.preventDefault();
+      appendToDisplay("÷");
+      break;
+
+    case "Enter":
+      event.preventDefault();
+      calculate();
+      break;
+
+    case "Escape":
+    case "Delete":
+    case "c":
+      clearDisplay();
+      break;
+
+    case "Backspace":
+      event.preventDefault();
+      backspace();
+      break;
+  }
 })
+
+const buttons = [...document.querySelectorAll(".buttons button")];
+
+let currentIndex = 0;
+
+buttons[currentIndex].classList.add("selected");
+
+function updateSelection() {
+  buttons.forEach(btn => btn.classList.remove("selected"));
+  buttons[currentIndex].classList.add("selected");
+  buttons[currentIndex].focus();
+}
+
+
 
 const clickSFX = new Audio("../public/sounds/ui/btn-click.wav");
 const calculateSFX = new Audio("../public/sounds/ui/btn-calculate.wav");
