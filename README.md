@@ -1,5 +1,5 @@
 <h3 align="center">A simple web-based calculator, built with Vanilla JS<br>
-    <a href="https://a-partovii.github.io/Web-Calculator/src/web-calculator.html">
+    <a href="https://jow5445.github.io/mod-calculator/src/web-calculator.html">
         👉Check Online👈
     </a>
 </h3>
