@@ -35,12 +35,12 @@ function factorial(numb) {
 function handleParentheses(eval_str) {
   let openCount = 0;
   let closeCount = 0;
-  // Count open and close parentheses
+
   for (let char of eval_str) {
     if (char === "(") openCount++;
     if (char === ")") closeCount++;
   }
-  // If opens was more than closes, appends closing parentheses
+
   while (openCount > closeCount) {
     eval_str += ")";
     closeCount++;
@@ -122,7 +122,7 @@ document.addEventListener("keydown", (event) => {
     case "ArrowDown":
       event.preventDefault();
       currentIndex += cols;
-      if (currentIndex >= buttons.length)
+      if  (currentIndex >= buttons.length)
         currentIndex %= buttons.length;
       updateSelection();
       return;
