@@ -33,7 +33,7 @@ function factorial(numb) {
 }
 
 function handleParentheses(eval_str) {
-  let openCount = 0;
+  let openCount =0;
   let closeCount = 0;
 
   for (let char of eval_str) {
@@ -103,7 +103,7 @@ document.addEventListener("keydown", (event) => {
     return;
   }
 
-  const cols = 5; // عدد الأعمدة
+  const cols = 5; 
 
   switch (event.key) {
 
@@ -135,7 +135,7 @@ document.addEventListener("keydown", (event) => {
       updateSelection();
       return;
 
-    case "Enter":
+    case "Enter!":
     case " ":
       event.preventDefault();
       buttons[currentIndex].click();
@@ -177,7 +177,6 @@ function updateSelection() {
   buttons[currentIndex].classList.add("selected");
   buttons[currentIndex].focus();
 }
-
 
 
 const clickSFX = new Audio("../public/sounds/ui/btn-click.wav");
